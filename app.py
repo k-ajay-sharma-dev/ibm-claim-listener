@@ -3,8 +3,10 @@ import requests
 import json
 from flask import Flask, jsonify, request
 from confluent_kafka import Consumer, Producer
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 
 # ── Config ────────────────────────────────────────────────────────────────────
 KAFKA_BROKERS  = "broker-0-p8rt5300ryr2w5t2.kafka.svc07.us-south.eventstreams.cloud.ibm.com:9093,broker-1-p8rt5300ryr2w5t2.kafka.svc07.us-south.eventstreams.cloud.ibm.com:9093,broker-2-p8rt5300ryr2w5t2.kafka.svc07.us-south.eventstreams.cloud.ibm.com:9093"
