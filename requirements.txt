@@ -1,4 +1,4 @@
 flask
 requests
 gunicorn
-kafka-python
+confluent-kafka
