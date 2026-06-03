@@ -152,6 +152,38 @@ def get_agent_response(thread_id):
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+# ── Proxy: Get IAM token + fetch threads ─────────────────────────────────────
+@app.route("/threads", methods=["GET"])
+def get_threads():
+    try:
+        token = get_iam_token()
+        headers = {"Authorization": f"Bearer {token}"}
+
+        r = requests.get(f"{WXO_BASE_URL}/v1/orchestrate/threads", headers=headers)
+        threads = r.json()
+
+        thread_data = []
+        for t in threads:
+            tid = t.get("id")
+            mr = requests.get(
+                f"{WXO_BASE_URL}/v1/orchestrate/threads/{tid}/messages",
+                headers=headers
+            )
+            messages = mr.json()
+            latest_time = messages[-1].get("created_on", "1970") if messages else "1970"
+            thread_data.append({
+                "thread_id": tid,
+                "messages": messages,
+                "latest_time": latest_time
+            })
+
+        thread_data.sort(key=lambda x: x["latest_time"], reverse=True)
+
+        return jsonify(thread_data[:10]), 200
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
 # ── Kafka Listener ────────────────────────────────────────────────────────────
 def kafka_listener():
     print("[Kafka] Starting consumer...")
