@@ -14,7 +14,7 @@ KAFKA_PASSWORD = "AaeIAaRelAxCPJ4NOU3rHVtHOPGRLpar15Axr_3uH-1v"
 
 WXO_BASE_URL   = "https://api.us-south.watson-orchestrate.cloud.ibm.com/instances/091ba2cc-c814-4bd4-9922-16b2beb7fd6a"
 IBM_API_KEY    = "jq5hJemMAGEdWm2_q-pkD83WKQ4WRBP3xdlgi9c94CqY"
-AGENT_ID       = "f87dcb15-da09-4d75-951e-38a1bcabf94c"
+AGENT_ID       = "26c75a07-cc8b-443b-86ea-ce7df4d68b89"
 
 KAFKA_CONF = {
     'bootstrap.servers': KAFKA_BROKERS,
