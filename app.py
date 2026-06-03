@@ -215,6 +215,20 @@ def kafka_listener():
 def health():
     return jsonify({"status": "running"}), 200
 
+@app.route("/")
+def index():
+    endpoints = {}
+    for rule in app.url_map.iter_rules():
+        if rule.endpoint != 'static':
+            methods = sorted([m for m in rule.methods if m not in ('HEAD', 'OPTIONS')])
+            endpoints[rule.rule] = methods
+
+    return jsonify({
+        "service": "Claim Processing Listener",
+        "status": "running",
+        "endpoints": endpoints
+    }), 200
+
 # ── Start ─────────────────────────────────────────────────────────────────────
 thread = threading.Thread(target=kafka_listener, daemon=True)
 thread.start()
